@@ -1,7 +1,15 @@
+import ColorMatching from "@/component/ColorMatching";
+
 export default function Home() {
 	return (
-		<main>
-			<h1 className="text-3xl font-bold">Color Matching Game</h1>
-		</main>
+		<div className="bg-blue-950 w-screen h-screen">
+			<main className="w-screen min-h-[500px] grid place-items-center">
+				<div className="flex flex-col justify-start items-center gap-2">
+					<h1 className="text-3xl font-bold text-white">Color Matching Game</h1>
+					<p className="text-md text-white">guess the order of the color</p>
+					<ColorMatching />
+				</div>
+			</main>
+		</div>
 	);
 }
