@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+const initialRow = ["red", "blue", "yellow", "orange", "green"];
+
 const shuffle = (array: string[]): string[] => {
 	let currentIndex = array.length;
 
@@ -33,8 +35,11 @@ const countNumCorrectOrder = (
 	return numCorrectOrder;
 };
 
+type GAME_STATE = "STAND_BY" | "PLAY" | "WIN" | "SURRENDER";
+
 export default function useColorMatching() {
-	const [row, setRow] = useState(["red", "blue", "yellow", "orange", "green"]);
+	const [gameState, setGameState] = useState<GAME_STATE>("STAND_BY");
+	const [row, setRow] = useState([...initialRow]);
 	const [correctAnswer, setCorrectAnswer] = useState<string[]>([]);
 	const [guessHistory, setGuessHistory] = useState<
 		{
@@ -67,6 +72,14 @@ export default function useColorMatching() {
 	const guessAnswer = () => {
 		const guessNum = guessHistory.length + 1;
 		const numCorrectOrder = countNumCorrectOrder(row, correctAnswer);
+		if (gameState === "STAND_BY") {
+			setGameState("PLAY");
+		}
+
+		if (numCorrectOrder === row.length) {
+			setGameState("WIN");
+		}
+
 		setGuessHistory([
 			{
 				guessNum: guessNum,
@@ -77,11 +90,25 @@ export default function useColorMatching() {
 		]);
 	};
 
-    const reset = () => {
-        generateAnswer();
-        setGuessHistory([]);
-        setRow(["red", "blue", "yellow", "orange", "green"])
-    }
+	const reset = () => {
+		generateAnswer();
+		setGuessHistory([]);
+		setRow([...initialRow]);
+		setGameState("STAND_BY");
+	};
 
-	return { row, guessHistory, swap, guessAnswer, reset };
+	const surrender = () => {
+		setGameState("SURRENDER");
+	};
+
+	return {
+		row,
+		correctAnswer,
+		guessHistory,
+		gameState,
+		swap,
+		guessAnswer,
+		surrender,
+		reset,
+	};
 }
