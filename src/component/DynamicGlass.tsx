@@ -11,7 +11,7 @@ interface DragItem {
 	color: string;
 }
 
-export default function Glass({
+export default function DynamicGlass({
 	color = "red",
 	swap,
 }: { color?: string; swap: (x: string, y: string) => void }) {

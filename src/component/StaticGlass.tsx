@@ -1,4 +1,4 @@
-export default function GlassGuess({ color = "red" }: { color?: string }) {
+export default function StaticGlass({ color = "red" }: { color?: string }) {
 	return (
 		<div>
 			<svg viewBox="0 0 20 20" width="100px">

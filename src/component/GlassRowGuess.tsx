@@ -1,4 +1,4 @@
-import GlassGuess from "./GlassGuess";
+import StaticGlass from "./StaticGlass";
 
 export default function GlassRowGuess({
 	row,
@@ -12,7 +12,7 @@ export default function GlassRowGuess({
 					{guessNum}
 				</div>
 				{row.map((item) => (
-					<GlassGuess key={item} color={item} />
+					<StaticGlass key={item} color={item} />
 				))}
 			</div>
 			<div className="text-white text-center">

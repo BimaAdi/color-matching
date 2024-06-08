@@ -5,36 +5,72 @@ import GlassRow from "./GlassRow";
 import useColorMatching from "@/hook/useColorMatching";
 import GlassRowGuess from "./GlassRowGuess";
 import Confetti from "react-confetti";
+import Play from "./Play";
+import Surrender from "./Surrender";
+import Win from "./Win";
 
 export default function ColorMatching() {
-	const { row, guessHistory, gameState, swap, guessAnswer, reset } =
-		useColorMatching();
+	const {
+		row,
+		guessHistory,
+		gameState,
+		correctAnswer,
+		swap,
+		guessAnswer,
+		reset,
+		surrender,
+	} = useColorMatching();
 
 	return (
 		<DndProvider backend={HTML5Backend}>
+			{gameState === "STAND_BY" || gameState === "PLAY" ? (
+				<p className="text-md text-white pb-5">
+					Guess the order of the color! drag the glass to swap position
+				</p>
+			) : (
+				<></>
+			)}
+			{gameState === "WIN" ? (
+				<p className="text-md text-white pb-5">
+					Congrats you guess correctly :)
+				</p>
+			) : (
+				<></>
+			)}
+			{gameState === "SURRENDER" ? (
+				<p className="text-md text-white pb-5">
+					Game over T T the correct answer is:
+				</p>
+			) : (
+				<></>
+			)}
+
 			<div className="flex flex-col items-center gap-2">
 				{typeof window !== "undefined" && gameState === "WIN" ? (
 					<Confetti width={window.innerWidth} height={window.innerHeight} />
 				) : (
 					<></>
 				)}
-
-				<GlassRow row={row} swap={swap} />
-				<div>
-					<button></button>
-					<button
-						onClick={guessAnswer}
-						className="max-w-[200px] focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-					>
-						Guess
-					</button>
-					<button
-						onClick={reset}
-						className=" max-w-[200px] focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-					>
-						Surrender
-					</button>
-				</div>
+				{gameState === "STAND_BY" || gameState === "PLAY" ? (
+					<Play
+						row={row}
+						swap={swap}
+						guessAnswer={guessAnswer}
+						surrender={surrender}
+					/>
+				) : (
+					<></>
+				)}
+				{gameState === "WIN" ? (
+					<Win correctAnswer={correctAnswer} reset={reset} />
+				) : (
+					<></>
+				)}
+				{gameState === "SURRENDER" ? (
+					<Surrender correctAnswer={correctAnswer} reset={reset} />
+				) : (
+					<></>
+				)}
 				<div
 					className={
 						guessHistory.length > 0

@@ -1,5 +1,5 @@
 "use client";
-import Glass from "./Glass";
+import DynamicGlass from "./DynamicGlass";
 
 export default function GlassRow({
 	row,
@@ -9,7 +9,7 @@ export default function GlassRow({
 		<div>
 			<div className="flex gap-2 justify-evenly">
 				{row.map((item) => (
-					<Glass key={item} color={item} swap={swap} />
+					<DynamicGlass key={item} color={item} swap={swap} />
 				))}
 			</div>
 		</div>
