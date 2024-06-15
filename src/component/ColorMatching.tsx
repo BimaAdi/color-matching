@@ -1,7 +1,6 @@
 "use client";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import GlassRow from "./GlassRow";
 import useColorMatching from "@/hook/useColorMatching";
 import GlassRowGuess from "./GlassRowGuess";
 import Confetti from "react-confetti";
@@ -20,6 +19,8 @@ export default function ColorMatching() {
 		reset,
 		surrender,
 	} = useColorMatching();
+
+	console.log(correctAnswer);
 
 	return (
 		<DndProvider backend={HTML5Backend}>
